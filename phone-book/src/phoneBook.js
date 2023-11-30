@@ -1,5 +1,6 @@
 function createPhoneBook() {
-    const phoneBook = initialList = {}
+    const initialList = {}
+    const phoneBook = initialList
 
     function getNumber(name) {
         if (!name) {
@@ -38,7 +39,7 @@ function createPhoneBook() {
 
 const phoneBook = createPhoneBook()
 
-function perfomCommand(command) {
+export function handleCommand(command) {
     if (command === null) {
         return "Invalid"
     }
@@ -53,12 +54,4 @@ function perfomCommand(command) {
     } else {
         return "Invalid"
     }
-}
-
- while (true) {
-     const a = prompt("Введите команду") // get Jura // set Vitya 8327489327498 // delete Kostja // exit 
-    if (a === 'exit') {
-        break
-    }
-    alert(perfomCommand(a))
 }
