@@ -1,5 +1,4 @@
-function createPhoneBook() {
-    const initialList = {}
+function createPhoneBook(initialList = {}) {
     const phoneBook = initialList
 
     function getNumber(name) {
@@ -33,7 +32,8 @@ function createPhoneBook() {
     return {
         getNumber,
         setNumber,
-        deleteNumber
+        deleteNumber,
+        phoneBook
     }
 }
 
@@ -55,3 +55,28 @@ export function handleCommand(command) {
         return "Invalid"
     }
 }
+
+function getPhoneBook() {
+    const nowPhoneBook = []
+    for (const name in phoneBook.phoneBook) {
+        nowPhoneBook.push({name: name, number: phoneBook.phoneBook[name]})
+    }
+    return nowPhoneBook
+}
+
+export function PhoneBook() {
+    return (
+      <>
+        <h2>Наша телефонная книга</h2>
+        <ol>
+          {getPhoneBook().map(element => (
+            <li>
+              <span className='green'>{element.name + ' - номер: '}</span>
+              <span className='blue'>{element.number}</span>
+            </li>
+          ))}
+        </ol>
+      </>
+    )
+  }
+  

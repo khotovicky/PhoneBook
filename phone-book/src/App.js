@@ -1,48 +1,28 @@
 import './App.css';
-import { handleCommand } from './phoneBook'
 import { useState } from 'react'
+import { Input } from './command.js';
+import { useHistory, History } from './History'
+import { PhoneBook } from './phoneBook';
 
+export function App() {
+    const [command, setCommand] = useState('')
+    const history = useHistory(command)
 
-function App() {
-  
-  const [command, setCommand] = useState('')
-  const [historyElements, setHistoryElements] = useState([])
-  let nextId = 0
-
-  const handleInput = (e) => {
-    setCommand(e.target.value)
-  }
-
-  function handleClick() {
-    setHistoryElements([
-      ...historyElements,
-      {id: nextId++, command: command, result: handleCommand(command)}
-    ])
-  }
-
-  function History() {
     return (
-      <ul>
-        {historyElements.map(element => (
-          <li key={element.id}>
-            <span class='green'>{element.command + ': '}</span>
-            <span class='blue'>{element.result}</span>
-          </li>
-        ))}
-        
-      </ul>
-    )
-  }
-
-  return (
     <div class='App'>
-      <History/>
-      <input onChange={handleInput}/>
-      <button onClick={handleClick}>Enter</button>
+      <History
+        historyElements={history.elements}
+        deleteHistoryElement={history.deleteElement}
+      />
+      <Input
+        value={command}
+        setValue={setCommand}
+      />
+      <button onClick={history.addElement}>Enter</button>
+      <button onClick={history.deleteHistory}>Delete history</button>
+      <PhoneBook />
     </div>
   )
 }
 
-
-
-export default App;
+export default App
