@@ -1,5 +1,6 @@
-function createPhoneBook(initialList = {}) {
-    const phoneBook = initialList
+import { useState } from "react"
+export function usePhoneBook() {
+    const [phoneBook, setPhoneBook] = useState({}) 
 
     function getNumber(name) {
         if (!name) {
@@ -15,7 +16,10 @@ function createPhoneBook(initialList = {}) {
         if (!name || !number) {
             return 'invalid'
         }
-        phoneBook[name] = number
+        setPhoneBook({
+            ...phoneBook,
+            [name]: number
+        })
         return 'Имя добавлено'
     }
     
@@ -27,6 +31,7 @@ function createPhoneBook(initialList = {}) {
             return 'Этого имени нет'
         }
         delete phoneBook[name]
+        setPhoneBook(phoneBook)
         return "Имя удалено"
     }
     return {
@@ -37,9 +42,7 @@ function createPhoneBook(initialList = {}) {
     }
 }
 
-const phoneBook = createPhoneBook()
-
-export function handleCommand(command) {
+export function handleCommand(command, phoneBook) {
     if (command === null) {
         return "Invalid"
     }
@@ -56,27 +59,10 @@ export function handleCommand(command) {
     }
 }
 
-function getPhoneBook() {
+export function getPhoneBook(phoneBook) {
     const nowPhoneBook = []
     for (const name in phoneBook.phoneBook) {
         nowPhoneBook.push({name: name, number: phoneBook.phoneBook[name]})
     }
     return nowPhoneBook
 }
-
-export function PhoneBook() {
-    return (
-      <>
-        <h2>Наша телефонная книга</h2>
-        <ol>
-          {getPhoneBook().map(element => (
-            <li>
-              <span className='green'>{element.name + ' - номер: '}</span>
-              <span className='blue'>{element.number}</span>
-            </li>
-          ))}
-        </ol>
-      </>
-    )
-  }
-  

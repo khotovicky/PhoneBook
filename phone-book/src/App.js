@@ -1,12 +1,17 @@
 import './App.css';
 import { useState } from 'react'
-import { Input } from './command.js';
-import { useHistory, History } from './History'
-import { PhoneBook } from './phoneBook';
+import { Input } from './Input.js'
+import { useHistory } from './History'
+import { History } from './components/History'
+import { usePhoneBook } from './phoneBook';
+import { getPhoneBook } from './phoneBook'
+import { PhoneBook } from './components/PhoneBook'
+
 
 export function App() {
     const [command, setCommand] = useState('')
-    const history = useHistory(command)
+    const phoneBook = usePhoneBook()
+    const history = useHistory(command, phoneBook)
 
     return (
     <div class='App'>
@@ -20,7 +25,10 @@ export function App() {
       />
       <button onClick={history.addElement}>Enter</button>
       <button onClick={history.deleteHistory}>Delete history</button>
-      <PhoneBook />
+      <PhoneBook
+        getPhoneBook={getPhoneBook}
+        phoneBook={phoneBook}
+      />
     </div>
   )
 }
