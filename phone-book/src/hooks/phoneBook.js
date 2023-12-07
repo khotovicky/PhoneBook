@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { deleteObjectElement } from "../utils/deleteObjectElement"
 export function usePhoneBook() {
     const [phoneBook, setPhoneBook] = useState({}) 
 
@@ -16,10 +17,21 @@ export function usePhoneBook() {
         if (!name || !number) {
             return 'invalid'
         }
+        let isThisName
+        let hasSameNumber
+        if (phoneBook[name] !== undefined) {
+            isThisName = true
+            if (phoneBook[name] === number) {
+                hasSameNumber = true
+            }
+        }
         setPhoneBook({
             ...phoneBook,
             [name]: number
         })
+        if (isThisName === true) {
+            return hasSameNumber ? 'Такой номер уже есть' : 'Номер изменен'
+        }
         return 'Имя добавлено'
     }
     
@@ -30,8 +42,7 @@ export function usePhoneBook() {
         if (!phoneBook[name]) {
             return 'Этого имени нет'
         }
-        delete phoneBook[name]
-        setPhoneBook(phoneBook)
+        setPhoneBook(deleteObjectElement(phoneBook, name))
         return "Имя удалено"
     }
     return {
@@ -57,12 +68,4 @@ export function handleCommand(command, phoneBook) {
     } else {
         return "Invalid"
     }
-}
-
-export function getPhoneBook(phoneBook) {
-    const nowPhoneBook = []
-    for (const name in phoneBook.phoneBook) {
-        nowPhoneBook.push({name: name, number: phoneBook.phoneBook[name]})
-    }
-    return nowPhoneBook
 }

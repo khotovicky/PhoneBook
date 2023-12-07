@@ -1,17 +1,21 @@
-import './App.css';
+import './App.css'
 import { useState } from 'react'
-import { Input } from './Input.js'
-import { useHistory } from './History'
+import { Input } from './components/Input.js'
+import { useHistory } from './hooks/history'
 import { History } from './components/History'
-import { usePhoneBook } from './phoneBook';
-import { getPhoneBook } from './phoneBook'
+import { handleCommand, usePhoneBook } from './hooks/phoneBook'
+import { transformPhoneBookObjectToArray } from "./utils/tranformObjectToArray"
 import { PhoneBook } from './components/PhoneBook'
-
 
 export function App() {
     const [command, setCommand] = useState('')
     const phoneBook = usePhoneBook()
-    const history = useHistory(command, phoneBook)
+    const history = useHistory()
+    const perfomCommand = () => {
+      const response = handleCommand(command, phoneBook)
+      history.addElement(command, response)
+    }
+    const phoneBookArray = transformPhoneBookObjectToArray(phoneBook.phoneBook)
 
     return (
     <div class='App'>
@@ -23,11 +27,10 @@ export function App() {
         value={command}
         setValue={setCommand}
       />
-      <button onClick={history.addElement}>Enter</button>
+      <button onClick={perfomCommand}>Enter</button>
       <button onClick={history.deleteHistory}>Delete history</button>
       <PhoneBook
-        getPhoneBook={getPhoneBook}
-        phoneBook={phoneBook}
+        phoneBookArray={phoneBookArray}
       />
     </div>
   )

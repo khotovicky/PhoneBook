@@ -1,14 +1,13 @@
 import { useState } from 'react'
-import { getId } from './utils/getId'
-import { handleCommand } from './phoneBook'
+import { getId } from '../utils/getId'
 
-export function useHistory(command, phoneBook) {
+export function useHistory() {
     const [elements, setElements] = useState([])
-    function addElement() {
-        
+    function addElement(command, result) {
+ 
         setElements([
             ...elements,
-            {id: String(getId()), command: command, result: handleCommand(command, phoneBook)}
+            {id: String(getId()), command, result}
         ])
         return elements
     }
