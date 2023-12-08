@@ -1,5 +1,4 @@
 export function PhoneBook({ phoneBookArray }) {
-
     return (
       <>
         <h2>Наша телефонная книга</h2>

@@ -1,9 +1,5 @@
-export function deleteObjectElement(object, element) {
-    const newObject = {}
-    for (const item in object) {
-        if (item !== element) {
-            newObject[item] = object[item]
-        }
-    }
+export function excludeObjectElement(object, key) {
+    const newObject = {...object}
+    delete newObject[key]
     return newObject;
 }

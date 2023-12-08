@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
-export function History( {historyElements, deleteHistoryElement} ) {
+
+export function History({ historyElements, deleteHistoryElement }) {
     return (
       <ul>
         {historyElements.map(element => (
@@ -27,3 +28,4 @@ export function History( {historyElements, deleteHistoryElement} ) {
       result: PropTypes.string
     }))
   }
+  

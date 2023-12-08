@@ -5,6 +5,7 @@ export function Input({ value, setValue }) {
     return (
       <input
         onChange={handleInput}
+        value={value}
       />
     )
 }

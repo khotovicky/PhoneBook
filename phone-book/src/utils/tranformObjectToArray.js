@@ -1,7 +1,7 @@
-export function transformPhoneBookObjectToArray (object) {
+export function transformPhoneBookObjectToArray (phoneBook) {
     const array = []
-    for (const element in object) {
-        array.push({name: element, number: object[element]})
+    for (const name in phoneBook) {
+        array.push({name: name, number: phoneBook[name]})
     }
     return array
 }
