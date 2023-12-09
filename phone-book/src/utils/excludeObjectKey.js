@@ -1,4 +1,4 @@
-export function excludeObjectElement(object, key) {
+export function excludeObjectKey(object, key) {
     const newObject = {...object}
     delete newObject[key]
     return newObject;

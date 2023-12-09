@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { excludeObjectElement } from "../utils/deleteObjectElement"
+import { excludeObjectKey } from "../utils/excludeObjectKey"
 
 export function usePhoneBook() {
     const [phoneBook, setPhoneBook] = useState({}) 
@@ -38,7 +38,7 @@ export function usePhoneBook() {
         if (!phoneBook[name]) {
             return 'Этого имени нет'
         }
-        setPhoneBook(excludeObjectElement(phoneBook, name))
+        setPhoneBook(phoneBook => excludeObjectKey(phoneBook, name))
         return "Имя удалено"
     }
     return {

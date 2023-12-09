@@ -28,7 +28,8 @@ export function App() {
         setValue={setCommand}
       />
       <button onClick={perfomCommand}>Enter</button>
-      <button onClick={history.deleteHistory}>Delete history</button>
+      {console.log(history.elements)}
+      {(history.elements.length) > 0 && <button onClick={history.deleteHistory}>Delete history</button>}
       <PhoneBook
         phoneBookArray={phoneBookArray}
       />
