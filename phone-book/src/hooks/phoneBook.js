@@ -1,5 +1,8 @@
-function createPhoneBook() {
-    const phoneBook = initialList = {}
+import { useState } from "react"
+import { excludeObjectKey } from "../utils/excludeObjectKey"
+
+export function usePhoneBook() {
+    const [phoneBook, setPhoneBook] = useState({}) 
 
     function getNumber(name) {
         if (!name) {
@@ -15,7 +18,16 @@ function createPhoneBook() {
         if (!name || !number) {
             return 'invalid'
         }
-        phoneBook[name] = number
+        setPhoneBook({
+            ...phoneBook,
+            [name]: number
+        })
+        if (phoneBook[name] === number) {
+            return 'Такой номер уже есть'
+        }
+        if (phoneBook[name] !== undefined) {
+            return 'Номер изменен'
+        }
         return 'Имя добавлено'
     }
     
@@ -26,19 +38,18 @@ function createPhoneBook() {
         if (!phoneBook[name]) {
             return 'Этого имени нет'
         }
-        delete phoneBook[name]
+        setPhoneBook(phoneBook => excludeObjectKey(phoneBook, name))
         return "Имя удалено"
     }
     return {
         getNumber,
         setNumber,
-        deleteNumber
+        deleteNumber,
+        phoneBook
     }
 }
 
-const phoneBook = createPhoneBook()
-
-function perfomCommand(command) {
+export function handleCommand(command, phoneBook) {
     if (command === null) {
         return "Invalid"
     }
@@ -53,12 +64,4 @@ function perfomCommand(command) {
     } else {
         return "Invalid"
     }
-}
-
- while (true) {
-     const a = prompt("Введите команду") // get Jura // set Vitya 8327489327498 // delete Kostja // exit 
-    if (a === 'exit') {
-        break
-    }
-    alert(perfomCommand(a))
 }
